@@ -15,7 +15,11 @@ const App = React.createClass({
 const About = React.createClass({
 	render(){
 		return(
-			<div>about</div>
+			<div className="full_div">
+				<div className="div_temp"></div>
+				<div className="div_items"></div>
+				<div className="div_chart"></div>
+			</div>
 			)
 	}
 })
@@ -38,7 +42,7 @@ const User = React.createClass({
 
 ReactDOM.render(
 	<Router history={hashHistory}>
-		<Route path='/' component={App}>
+		<Route path='/' component={About}>
 			<Route path='about' component={About}/>
 			<Route path='users' component={Users} />
 		</Route>

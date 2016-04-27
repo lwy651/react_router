@@ -78,8 +78,10 @@
 		render: function render() {
 			return _react2.default.createElement(
 				'div',
-				null,
-				'about'
+				{ className: 'full_div' },
+				_react2.default.createElement('div', { className: 'div_temp' }),
+				_react2.default.createElement('div', { className: 'div_items' }),
+				_react2.default.createElement('div', { className: 'div_chart' })
 			);
 		}
 	});
@@ -111,7 +113,7 @@
 		{ history: _reactRouter.hashHistory },
 		_react2.default.createElement(
 			_reactRouter.Route,
-			{ path: '/', component: App },
+			{ path: '/', component: About },
 			_react2.default.createElement(_reactRouter.Route, { path: 'about', component: About }),
 			_react2.default.createElement(_reactRouter.Route, { path: 'users', component: Users })
 		)
