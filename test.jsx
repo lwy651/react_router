@@ -1,9 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
+import ajax from 'superagent'
 import Tempcomp from './components/Tempcomp.js'
 import Itemslist from './components/Itemslist.js'
 import Tempchart from './components/Tempchart.js'
+
+var url = 'http://localhost:3000'
+
+ajax.get(url)
+	.end((error,response)=>{
+		if(!error&&response){
+			var data = JSON.parse(response.text)
+			console.log(data.a)
+		}
+		else
+		{
+			console.log(error)
+		}
+	})
 
 const App = React.createClass({
 	render(){
