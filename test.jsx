@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
+import Tempcomp from './components/Tempcomp.js'
+import Itemslist from './components/Itemslist.js'
+import Tempchart from './components/Tempchart.js'
 
 const App = React.createClass({
 	render(){
@@ -16,9 +19,9 @@ const About = React.createClass({
 	render(){
 		return(
 			<div className="full_div">
-				<div className="div_temp"></div>
-				<div className="div_items"></div>
-				<div className="div_chart"></div>
+				<Tempcomp />
+				<Itemslist />
+				<Tempchart />
 			</div>
 			)
 	}
