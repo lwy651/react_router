@@ -68,69 +68,38 @@
 
 	var _Itemslist2 = _interopRequireDefault(_Itemslist);
 
-	var _Tempchart = __webpack_require__(233);
+	var _Tempchart = __webpack_require__(234);
 
 	var _Tempchart2 = _interopRequireDefault(_Tempchart);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var url = 'http://localhost:3000';
+	var url = 'http://localhost:3000/nowWeather';
+	var temdata;
 
-	_superagent2.default.get(url).end(function (error, response) {
-		if (!error && response) {
-			var data = JSON.parse(response.text);
-			console.log(data.a);
-		} else {
-			console.log(error);
-		}
-	});
+	var Home = _react2.default.createClass({
+		displayName: 'Home',
 
-	var App = _react2.default.createClass({
-		displayName: 'App',
+		componentDidMount: function componentDidMount() {
+			var _this = this;
+
+			_superagent2.default.get(url).end(function (error, response) {
+				if (!error && response) {
+					temdata = JSON.parse(response.text).results[0];
+					_this.setState({ data: temdata });
+				} else {
+					console.log(error);
+				}
+			});
+		},
 		render: function render() {
+
+			console.log(temdata);
+			var rows = [_react2.default.createElement(_Tempcomp2.default, { key: '651', data: temdata }), _react2.default.createElement(_Itemslist2.default, null), _react2.default.createElement(_Tempchart2.default, null)];
 			return _react2.default.createElement(
 				'div',
-				null,
-				_react2.default.createElement(
-					_reactRouter.Link,
-					{ to: 'about' },
-					'5555'
-				),
-				this.props.children
-			);
-		}
-	});
-	var About = _react2.default.createClass({
-		displayName: 'About',
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'full_div' },
-				_react2.default.createElement(_Tempcomp2.default, null),
-				_react2.default.createElement(_Itemslist2.default, null),
-				_react2.default.createElement(_Tempchart2.default, null)
-			);
-		}
-	});
-
-	var Users = _react2.default.createClass({
-		displayName: 'Users',
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				'651'
-			);
-		}
-	});
-
-	var User = _react2.default.createClass({
-		displayName: 'User',
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				'123'
+				{ id: 'app' },
+				rows
 			);
 		}
 	});
@@ -140,9 +109,8 @@
 		{ history: _reactRouter.hashHistory },
 		_react2.default.createElement(
 			_reactRouter.Route,
-			{ path: '/', component: About },
-			_react2.default.createElement(_reactRouter.Route, { path: 'about', component: About }),
-			_react2.default.createElement(_reactRouter.Route, { path: 'users', component: Users })
+			{ path: '/', component: Home },
+			_react2.default.createElement(_reactRouter.Route, { path: 'about', component: Home })
 		)
 	), document.getElementById('app'));
 
@@ -27058,22 +27026,33 @@
 		_createClass(Tempcomp, [{
 			key: "render",
 			value: function render() {
+				var data = this.props.data;
+				var city = "";
+				var temp = "";
+				if (typeof data != "undefined") {
+					city = data.location.name;
+					temp = data.now.temperature;
+				}
 				return _react2.default.createElement(
 					"div",
-					{ className: "div_temp" },
+					{ className: "tempcomp" },
 					_react2.default.createElement(
 						"div",
-						{ className: "temp" },
+						{ className: "center" },
 						_react2.default.createElement(
 							"span",
 							{ className: "city" },
-							"南京"
+							city
 						),
-						_react2.default.createElement("br", null),
 						_react2.default.createElement(
 							"span",
 							{ className: "temp_num" },
-							"38"
+							temp
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "temp_num du" },
+							"°"
 						)
 					)
 				);
@@ -27087,6 +27066,63 @@
 
 /***/ },
 /* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Weatheritem = __webpack_require__(233);
+
+	var _Weatheritem2 = _interopRequireDefault(_Weatheritem);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Itemslist = function (_Component) {
+		_inherits(Itemslist, _Component);
+
+		function Itemslist() {
+			_classCallCheck(this, Itemslist);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Itemslist).apply(this, arguments));
+		}
+
+		_createClass(Itemslist, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'items_list' },
+					_react2.default.createElement(_Weatheritem2.default, null),
+					_react2.default.createElement(_Weatheritem2.default, null),
+					_react2.default.createElement(_Weatheritem2.default, null),
+					_react2.default.createElement(_Weatheritem2.default, null),
+					_react2.default.createElement(_Weatheritem2.default, null)
+				);
+			}
+		}]);
+
+		return Itemslist;
+	}(_react.Component);
+
+	exports.default = Itemslist;
+
+/***/ },
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27109,33 +27145,37 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Itemslist = function (_Component) {
-		_inherits(Itemslist, _Component);
+	var Weatheritem = function (_Component) {
+		_inherits(Weatheritem, _Component);
 
-		function Itemslist() {
-			_classCallCheck(this, Itemslist);
+		function Weatheritem() {
+			_classCallCheck(this, Weatheritem);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Itemslist).apply(this, arguments));
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Weatheritem).apply(this, arguments));
 		}
 
-		_createClass(Itemslist, [{
+		_createClass(Weatheritem, [{
 			key: "render",
 			value: function render() {
 				return _react2.default.createElement(
 					"div",
-					{ className: "div_items" },
-					"item"
+					{ className: "tem_item" },
+					_react2.default.createElement(
+						"span",
+						null,
+						"Sun"
+					)
 				);
 			}
 		}]);
 
-		return Itemslist;
+		return Weatheritem;
 	}(_react.Component);
 
-	exports.default = Itemslist;
+	exports.default = Weatheritem;
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27170,11 +27210,7 @@
 		_createClass(Tempchart, [{
 			key: "render",
 			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ className: "div_chart" },
-					"chart"
-				);
+				return _react2.default.createElement("canvas", { className: "weather_chart" });
 			}
 		}]);
 
